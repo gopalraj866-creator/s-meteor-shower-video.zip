@@ -1,0 +1,81 @@
+name: Render meteor shower video
+
+on:
+  workflow_dispatch:
+    inputs:
+      shards:
+        description: "Parallel render jobs (more = faster; GitHub free tier runs ~20 at once)"
+        default: "20"
+      preset:
+        description: "full = 1080p30 15 min | preview = 540p15 quick look"
+        type: choice
+        options: [full, preview]
+        default: full
+      crf:
+        description: "x264 quality (lower = bigger/better). 16 is visually lossless-ish"
+        default: "16"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.m.outputs.matrix }}
+    steps:
+      - id: m
+        run: |
+          n=${{ inputs.shards }}
+          echo "matrix=$(seq 0 $((n-1)) | jq -cRs '[split("\n")[]|select(length>0)|tonumber]')" >> "$GITHUB_OUTPUT"
+
+  render:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        shard: ${{ fromJson(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: npm install --omit=optional
+      - name: Render shard ${{ matrix.shard }}
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          CRF: ${{ inputs.crf }}
+        run: node render/render.mjs --preset ${{ inputs.preset }} --shard ${{ matrix.shard }} --shards ${{ inputs.shards }} --out out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: segments-${{ matrix.shard }}
+          path: out/seg_*.mp4
+          compression-level: 0
+          retention-days: 3
+
+  assemble:
+    needs: render
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: segments-*
+          merge-multiple: true
+          path: out
+      - name: Soundtrack
+        run: node scripts/make-audio.mjs --out audio.wav
+      - name: Stitch + mux
+        run: node scripts/assemble.mjs --segs out --audio audio.wav --out meteor_shower_15min.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: meteor_shower_15min
+          path: meteor_shower_15min.mp4
+          compression-level: 0
+          retention-days: 14
