@@ -1,0 +1,171 @@
+{
+  "_comment": "Everything about the film lives here. Same config + same seed = identical frames, so parallel GitHub Action chunks stitch together perfectly.",
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration": 900
+  },
+  "seed": 20261021,
+  "location": {
+    "name": "Bhopal, India",
+    "lat": 23.2599,
+    "lon": 77.4126
+  },
+  "startTime": "2026-10-21T23:30:00+05:30",
+  "timeLapse": 12,
+  "radiant": {
+    "name": "Orionids",
+    "raDeg": 95.0,
+    "decDeg": 16.0
+  },
+  "camera": {
+    "fovDeg": 62,
+    "eyeHeight": 1.7,
+    "azStart": 80,
+    "azEnd": 56,
+    "pitchIntro": 4,
+    "pitchMain": 27,
+    "pitchOutro": 16
+  },
+  "sky": {
+    "milkyWayGain": 0.14,
+    "pollution": 0.16,
+    "pollutionAzimuth": 205,
+    "airglow": 1.0
+  },
+  "meteors": {
+    "baseRate": 0.2,
+    "burstCenter": 570,
+    "burstWidth": 32,
+    "burstRate": 1.1,
+    "sporadicFraction": 0.22
+  },
+  "fireballs": [
+    {
+      "t": 95,
+      "dur": 2.2,
+      "lengthDeg": 26,
+      "bright": 2.2,
+      "flash": 0.22
+    },
+    {
+      "t": 215,
+      "dur": 2.6,
+      "lengthDeg": 32,
+      "bright": 2.4,
+      "flash": 0.26
+    },
+    {
+      "t": 335,
+      "dur": 2.0,
+      "lengthDeg": 24,
+      "bright": 2.3,
+      "flash": 0.22
+    },
+    {
+      "t": 450,
+      "dur": 3.0,
+      "lengthDeg": 38,
+      "bright": 2.6,
+      "flash": 0.32
+    },
+    {
+      "t": 538,
+      "dur": 2.4,
+      "lengthDeg": 30,
+      "bright": 2.5,
+      "flash": 0.28
+    },
+    {
+      "t": 640,
+      "dur": 4.6,
+      "lengthDeg": 62,
+      "bright": 3.4,
+      "flash": 0.75,
+      "super": true
+    },
+    {
+      "t": 725,
+      "dur": 2.2,
+      "lengthDeg": 28,
+      "bright": 2.3,
+      "flash": 0.22
+    },
+    {
+      "t": 810,
+      "dur": 2.8,
+      "lengthDeg": 34,
+      "bright": 2.5,
+      "flash": 0.3
+    }
+  ],
+  "satellites": [
+    {
+      "t": 38,
+      "dur": 150
+    },
+    {
+      "t": 410,
+      "dur": 135
+    },
+    {
+      "t": 735,
+      "dur": 140
+    }
+  ],
+  "overlays": [
+    {
+      "t0": 3.5,
+      "t1": 12.5,
+      "style": "title",
+      "main": "ORIONIDS METEOR SHOWER",
+      "sub": "A GROUND-LEVEL VIEW OF THE NIGHT SKY"
+    },
+    {
+      "t0": 14,
+      "t1": 21,
+      "style": "lower",
+      "main": "TECHNICAL TALK INDIA",
+      "sub": "100% procedural  \u00b7  Three.js + WebGL"
+    },
+    {
+      "t0": -14,
+      "t1": -4,
+      "style": "title",
+      "main": "CLEAR SKIES",
+      "sub": "THANKS FOR WATCHING"
+    }
+  ],
+  "quality": {
+    "milkyWayBake": 4096,
+    "starCount": 15000,
+    "antialias": true,
+    "jpegQuality": 0.96,
+    "msaa": 4,
+    "bloom": 0.55,
+    "exposure": 1.0,
+    "groundLight": 3.2
+  },
+  "grazers": [
+    {
+      "t": 175,
+      "dur": 6.0,
+      "lengthDeg": 78,
+      "bright": 1.5
+    },
+    {
+      "t": 505,
+      "dur": 5.2,
+      "lengthDeg": 70,
+      "bright": 1.4
+    },
+    {
+      "t": 770,
+      "dur": 6.4,
+      "lengthDeg": 84,
+      "bright": 1.6
+    }
+  ],
+  "watermark": "TECHNICAL TALK INDIA"
+}

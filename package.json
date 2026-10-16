@@ -1,0 +1,20 @@
+{
+  "name": "meteor-shower-video",
+  "version": "1.0.0",
+  "description": "Cinematic ground-level meteor shower, rendered frame-by-frame with Three.js + headless Chrome + ffmpeg",
+  "type": "module",
+  "scripts": {
+    "still": "node render/render.mjs --still",
+    "preview": "node render/render.mjs --preset preview --shard 0 --shards 1 --out out-preview",
+    "render": "node render/render.mjs --shard 0 --shards 1 --out out",
+    "audio": "node scripts/make-audio.mjs --out audio.wav",
+    "assemble": "node scripts/assemble.mjs --segs out --audio audio.wav --out meteor_shower_15min.mp4"
+  },
+  "dependencies": {
+    "three": "0.160.0",
+    "puppeteer-core": "^23.11.1"
+  },
+  "optionalDependencies": {
+    "@sparticuz/chromium": "^131.0.1"
+  }
+}
